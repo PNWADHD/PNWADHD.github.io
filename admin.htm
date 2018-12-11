@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <style type="text/css">
+#container{
+  height:auto;
+  width: auto;
+
+}
+
+#header{
+  height: 150px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 100px;
+
+}
+
+#leftpanel{
+  height: 650px;
+  width: 400px;
+  background-color: white;
+  display: block;
+  float: left;
+}
+
+#mainpanel{
+  height: 650px;
+  width: 600px;
+  background-color: white;
+  display: block;
+  float: left;
+  margin-left: 10px;
+}
+
+#menu{
+  height: 30px;
+  width: 400px;
+  background-color: orange;
+  text-align: center;
+  font-size: 20px;
+}
+
+#a{
+  height: 600px;
+  overflow: scroll;
+  margin-top: 20px;
+}
+
+#info{
+height: 50px;
+width: 100%;
+background-color: blue;
+
+color: white;
+
+}
+
+    </style>
+
+      <script type="text/javascript">
+      var oil;
+      var alum;
+      var creditScore;
+      var money;
+      var bauxite;
+      var food;
+      var gas;
+      var iron;
+      var lead;
+      var munitions;
+      var steel;
+      var uranium;
+      var accountnumber;
+      var nationname;
+      var id;
+      var coal;
+      var currentdebtowed;
+      var userID;
+      var debt;
+      var invested;
+      var mpn;
+function depo(){
+  var database = firebase.database();
+  var loanRe = [];
+        database.ref('/DepositRequest/').on('value', function(snap) {
+           loanRe = [];
+          snap.forEach(function(item) {
+            document.getElementById("a").innerHTML = "";
+            loanRe.unshift(item.val());
+          }
+        )
+  var checkcheck = 0;
+  var postfill = postfill;
+    document.getElementById("a").innerHTML = "";
+    var posttable = document.createElement('table');
+    for(var i = 0; i < loanRe.length; i++){
+      var row = posttable.insertRow(checkcheck);
+      row.style.backgroundColor = "purple";
+      row.style.height = "140px";
+      row.style.width = "400px";
+      checkcheck++;
+      var cell1 = row.insertCell(0);
+      cell1.colspan = "2";
+      cell1.style.width = "400px";
+      cell1.style.height = "140px";
+
+        cell1.style.fontSize = "40px";
+        cell1.style.fontFamily = "sans-serif";
+
+        cell1.style.textAlign = "center";
+      cell1.id = loanRe[i].k;
+     cell1.onclick = function () {
+                tableText(this);
+            };
+  cell1.innerHTML = loanRe[i].nationname + '<br  /> Type: ' + loanRe[i].type + '<br  /> Amount: ' + loanRe[i].amount;
+      var div = document.getElementById('a');
+         div.appendChild(posttable);
+
+}
+
+});
+        }
+
+function tableText(d){
+  var dd = d.id;
+
+var nationname;
+var amount;
+var type;
+var key;
+
+var database = firebase.database();
+      var oi = firebase.database().ref().child('/DepositRequest/' + dd +'/nationname/');
+      oi.on('value', function(snapshot) {
+        nationname = snapshot.val();
+      });
+
+      var ty = firebase.database().ref().child('/DepositRequest/' + dd +'/type/');
+      ty.on('value', function(snapshot) {
+        type = snapshot.val();
+      });
+
+      var amot = firebase.database().ref().child('/DepositRequest/' + dd +'/amount/');
+      amot.on('value', function(snapshot) {
+        amount = snapshot.val();
+      });
+
+      var ke = firebase.database().ref().child('/DepositRequest/' + dd +'/key/');
+      ke.on('value', function(snapshot) {
+        key = snapshot.val();
+      });
+
+
+
+  retrieve(nationname);
+document.getElementById("infoadapter").innerHTML ='';
+  var element = document.createElement("Button");
+element.innerHTML = "Accept";
+element.onclick = function() {
+if(type == 'Money')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(money);
+  updates['bankaccountmoney'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Oil')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(oil);
+  updates['oil'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Coal')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(coal);
+  updates['coal'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Uranium')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(uranium);
+  updates['uranium'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Lead')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(lead);
+  updates['lead'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Iron')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(iron);
+  updates['iron'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Bauxite')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(bauxite);
+  updates['bauxite'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Gas')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(gas);
+  updates['gas'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Munitions')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(munitions);
+  updates['munitions'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Steel')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(steel);
+  updates['steel'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Aluminum')
+{
+  var updates = {};
+  var xx = Number(amount) + Number(alum);
+  updates['alum'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+
+var updates = {};
+
+updates['status'] = 'Accepted';
+database.ref('/Nations/' + nationname + '/SavingsRequest/' + key).update(updates);
+var adaRef = firebase.database().ref('/DepositRequest/' + dd);
+adaRef.remove()
+  .then(function() {
+    console.log("Remove succeeded.")
+  })
+  .catch(function(error) {
+    console.log("Remove failed: " + error.message)
+  });
+
+
+};
+
+var element1 = document.createElement("Button");
+element1.innerHTML = "Decline";
+element1.onclick = function() {
+
+  var updates = {};
+
+  updates['status'] = 'Declined';
+  database.ref('/Nations/' + nationname + '/SavingsRequest/' + key).update(updates);
+  var adaRef = firebase.database().ref('/DepositRequest/' + dd);
+  adaRef.remove()
+    .then(function() {
+      console.log("Remove succeeded.")
+    })
+    .catch(function(error) {
+      console.log("Remove failed: " + error.message)
+    });
+
+
+
+
+};
+
+var foo = document.getElementById("infoadapter");
+foo.appendChild(element);
+foo.appendChild(element1);
+
+
+
+
+
+}
+
+
+function wit(){
+    document.getElementById("a").innerHTML ="";
+  var database = firebase.database();
+  var loanRe = [];
+        database.ref('/WithdrawRequest/').on('value', function(snap) {
+           loanRe = [];
+          snap.forEach(function(item) {
+            document.getElementById("a").innerHTML = "";
+            loanRe.unshift(item.val());
+          }
+        )
+  var checkcheck = 0;
+  var postfill = postfill;
+    document.getElementById("a").innerHTML = "";
+    var posttable = document.createElement('table');
+    for(var i = 0; i < loanRe.length; i++){
+      var row = posttable.insertRow(checkcheck);
+      row.style.backgroundColor = "purple";
+      row.style.height = "140px";
+      row.style.width = "400px";
+      checkcheck++;
+      var cell1 = row.insertCell(0);
+      cell1.colspan = "2";
+      cell1.style.width = "400px";
+      cell1.style.height = "140px";
+        cell1.style.fontSize = "40px";
+        cell1.style.fontFamily = "sans-serif";
+        cell1.style.textAlign = "center";
+      cell1.id = loanRe[i].k;
+     cell1.onclick = function () {
+                withh(this);
+            };
+  cell1.innerHTML = loanRe[i].nationname + '<br  /> Type: ' + loanRe[i].type + '<br  /> Amount: ' + loanRe[i].amount;
+      var div = document.getElementById('a');
+         div.appendChild(posttable);
+
+  }
+
+  });
+}
+
+function withh(d){
+
+  var dd = d.id;
+
+var nationname;
+var amount;
+var type;
+var key;
+
+var database = firebase.database();
+      var oi = firebase.database().ref().child('/DepositRequest/' + dd +'/nationname/');
+      oi.on('value', function(snapshot) {
+        nationname = snapshot.val();
+      });
+
+      var ty = firebase.database().ref().child('/DepositRequest/' + dd +'/type/');
+      ty.on('value', function(snapshot) {
+        type = snapshot.val();
+      });
+
+      var amot = firebase.database().ref().child('/DepositRequest/' + dd +'/amount/');
+      amot.on('value', function(snapshot) {
+        amount = snapshot.val();
+      });
+
+      var ke = firebase.database().ref().child('/DepositRequest/' + dd +'/key/');
+      ke.on('value', function(snapshot) {
+        key = snapshot.val();
+      });
+
+
+
+  retrieve(nationname);
+document.getElementById("infoadapter").innerHTML ='';
+  var element = document.createElement("Button");
+element.innerHTML = "Accept";
+element.onclick = function() {
+if(type == 'Money')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(money);
+  updates['bankaccountmoney'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Oil')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(oil);
+  updates['oil'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Coal')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(coal);
+  updates['coal'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Uranium')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(uranium);
+  updates['uranium'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Lead')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(lead);
+  updates['lead'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Iron')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(iron);
+  updates['iron'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Bauxite')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(bauxite);
+  updates['bauxite'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Gas')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(gas);
+  updates['gas'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Munitions')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(munitions);
+  updates['munitions'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Steel')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(steel);
+  updates['steel'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+else if(type == 'Aluminum')
+{
+  var updates = {};
+  var xx = Number(amount) - Number(alum);
+  updates['alum'] = xx;
+  database.ref('/Nations/' + nationname).update(updates);
+}
+
+var updates = {};
+
+updates['status'] = 'Accepted';
+database.ref('/Nations/' + nationname + '/SavingsRequest/' + key).update(updates);
+var adaRef = firebase.database().ref('/WithdrawRequest/' + dd);
+adaRef.remove()
+  .then(function() {
+    console.log("Remove succeeded.")
+  })
+  .catch(function(error) {
+    console.log("Remove failed: " + error.message)
+  });
+
+
+};
+
+var element1 = document.createElement("Button");
+element1.innerHTML = "Decline";
+element1.onclick = function() {
+
+  var updates = {};
+
+  updates['status'] = 'Declined';
+  database.ref('/Nations/' + nationname + '/SavingsRequest/' + key).update(updates);
+  var adaRef = firebase.database().ref('/WithdrawRequest/' + dd);
+  adaRef.remove()
+    .then(function() {
+      console.log("Remove succeeded.")
+    })
+    .catch(function(error) {
+      console.log("Remove failed: " + error.message)
+    });
+};
+var foo = document.getElementById("infoadapter");
+foo.appendChild(element);
+foo.appendChild(element1);
+}
+
+function inv(){
+  var database = firebase.database();
+  var loanRe = [];
+        database.ref('/InvestRequest/').on('value', function(snap) {
+           loanRe = [];
+          snap.forEach(function(item) {
+            document.getElementById("a").innerHTML = "";
+            loanRe.unshift(item.val());
+          }
+        )
+  var checkcheck = 0;
+  var postfill = postfill;
+    document.getElementById("a").innerHTML = "";
+    var posttable = document.createElement('table');
+    for(var i = 0; i < loanRe.length; i++){
+      var row = posttable.insertRow(checkcheck);
+      row.style.backgroundColor = "purple";
+      row.style.height = "140px";
+      row.style.width = "400px";
+      checkcheck++;
+      var cell1 = row.insertCell(0);
+      cell1.colspan = "2";
+      cell1.style.width = "400px";
+      cell1.style.height = "140px";
+
+        cell1.style.fontSize = "40px";
+        cell1.style.fontFamily = "sans-serif";
+
+        cell1.style.textAlign = "center";
+      cell1.id = loanRe[i].key;
+     cell1.onclick = function () {
+                ew(this);
+            };
+  cell1.innerHTML = loanRe[i].nationname + '<br  /> Amount: ' + loanRe[i].amount + '<br  /><br  />';
+      var div = document.getElementById('a');
+         div.appendChild(posttable);
+}
+});
+}
+
+function ew(d){
+  var dd = d.id;
+
+  var nationname;
+  var amunt;
+  var type;
+  var key;
+  var k;
+  var pb;
+  var debt;
+  var database = firebase.database();
+      var oi = firebase.database().ref().child('/InvestRequest/' + dd +'/nationname/');
+      oi.on('value', function(snapshot) {
+        nationname = snapshot.val();
+      });
+
+      var ty = firebase.database().ref().child('/InvestRequest/' + dd +'/key/');
+      ty.on('value', function(snapshot) {
+        key = snapshot.val();
+      });
+
+      var amot = firebase.database().ref().child('/InvestRequest/' + dd +'/amount/');
+      amot.on('value', function(snapshot) {
+        amunt = snapshot.val();
+      });
+      retrieve(nationname);
+      document.getElementById("infoadapter").innerHTML ='';
+        var element = document.createElement("Button");
+      element.innerHTML = "Accept";
+      element.onclick = function() {
+        var updates = {};
+
+        var ee = Number(invested) + Number(amunt);
+        updates['invested'] = ee;
+        database.ref('/Nations/' + nationname).update(updates);
+
+        var updates = {};
+
+        updates['status'] = 'Accepted';
+        database.ref('/Nations/' + nationname + '/InvestRequest/' + key).update(updates);
+        var adaRef = firebase.database().ref('/InvestRequest/' + dd);
+        adaRef.remove()
+          .then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+
+      };
+
+      var element1 = document.createElement("Button");
+      element1.innerHTML = "Decline";
+      element1.onclick = function() {
+
+        var adaRef = firebase.database().ref('/InvestRequest/' + dd);
+        adaRef.remove()
+          .then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+      };
+      var foo = document.getElementById("infoadapter");
+      foo.appendChild(element);
+      foo.appendChild(element1);
+}
+
+function loan(){
+  document.getElementById("a").innerHTML ="";
+var database = firebase.database();
+var loanRe = [];
+      database.ref('/LoanRequest/').on('value', function(snap) {
+         loanRe = [];
+        snap.forEach(function(item) {
+          document.getElementById("a").innerHTML = "";
+          loanRe.unshift(item.val());
+        }
+      )
+var checkcheck = 0;
+var postfill = postfill;
+  document.getElementById("a").innerHTML = "";
+  var posttable = document.createElement('table');
+  for(var i = 0; i < loanRe.length; i++){
+    var row = posttable.insertRow(checkcheck);
+    row.style.backgroundColor = "purple";
+    row.style.height = "140px";
+    row.style.width = "400px";
+    checkcheck++;
+    var cell1 = row.insertCell(0);
+    cell1.colspan = "2";
+    cell1.style.width = "400px";
+    cell1.style.height = "140px";
+      cell1.style.fontSize = "40px";
+      cell1.style.fontFamily = "sans-serif";
+      cell1.style.textAlign = "center";
+    cell1.id = loanRe[i].k;
+   cell1.onclick = function () {
+              wi(this);
+          };
+cell1.innerHTML = loanRe[i].nationname + '<br  /> Amount: ' + loanRe[i].asking + '<br  /> Debt: '
++ loanRe[i].debt +'<br  /><br  />';
+    var div = document.getElementById('a');
+       div.appendChild(posttable);
+
+}
+
+});
+}
+
+function wi(d){
+  var dd = d.id;
+
+var nationname;
+var amount;
+var type;
+var key;
+var k;
+var pb;
+var debt;
+var database = firebase.database();
+      var oi = firebase.database().ref().child('/LoanRequest/' + dd +'/nationname/');
+      oi.on('value', function(snapshot) {
+        nationname = snapshot.val();
+      });
+
+      var llllll = firebase.database().ref().child('/LoanRequest/' + dd +'/debt/');
+      llllll.on('value', function(snapshot) {
+        debt = snapshot.val();
+      });
+
+
+      var ty = firebase.database().ref().child('/LoanRequest/' + dd +'/key/');
+      ty.on('value', function(snapshot) {
+        key = snapshot.val();
+      });
+
+      var amot = firebase.database().ref().child('/LoanRequest/' + dd +'/asking/');
+      amot.on('value', function(snapshot) {
+        amount = snapshot.val();
+      });
+
+      var ke = firebase.database().ref().child('/LoanRequest/' + dd +'/payback/');
+      ke.on('value', function(snapshot) {
+        pb = snapshot.val();
+      });
+
+      var keyyy = firebase.database().ref().child('/LoanRequest/' + dd +'/k/');
+      keyyy.on('value', function(snapshot) {
+        k = snapshot.val();
+      });
+
+      retrieve(nationname);
+
+      document.getElementById("infoadapter").innerHTML ='';
+        var element = document.createElement("Button");
+      element.innerHTML = "Accept";
+      element.onclick = function() {
+        var updates = {};
+        var xx = Number(amount) - Number(money);
+        var ee = Number(pb) + Number(debt);
+        updates['debt'] = ee;
+        database.ref('/Nations/' + nationname).update(updates);
+
+        var updates = {};
+
+        updates['status'] = 'Accepted';
+        database.ref('/Nations/' + nationname + '/LoanRequest/' + key).update(updates);
+        var adaRef = firebase.database().ref('/LoanRequest/' + dd);
+        adaRef.remove()
+          .then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+
+      };
+
+      var element1 = document.createElement("Button");
+      element1.innerHTML = "Decline";
+      element1.onclick = function() {
+
+        var adaRef = firebase.database().ref('/LoanRequest/' + dd);
+        adaRef.remove()
+          .then(function() {
+            console.log("Remove succeeded.")
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message)
+          });
+
+
+      };
+
+
+      var foo = document.getElementById("infoadapter");
+      foo.appendChild(element);
+      foo.appendChild(element1);
+
+
+}
+
+function unv(){
+  document.getElementById("a").innerHTML ="";
+var database = firebase.database();
+var loanRe = [];
+      database.ref('/UnvestRequest/').on('value', function(snap) {
+         loanRe = [];
+        snap.forEach(function(item) {
+          document.getElementById("a").innerHTML = "";
+          loanRe.unshift(item.val());
+        }
+      )
+var checkcheck = 0;
+var postfill = postfill;
+  document.getElementById("a").innerHTML = "";
+  var posttable = document.createElement('table');
+  for(var i = 0; i < loanRe.length; i++){
+    var row = posttable.insertRow(checkcheck);
+    row.style.backgroundColor = "purple";
+    row.style.height = "140px";
+    row.style.width = "400px";
+    checkcheck++;
+    var cell1 = row.insertCell(0);
+    cell1.colspan = "2";
+    cell1.style.width = "400px";
+    cell1.style.height = "140px";
+      cell1.style.fontSize = "40px";
+      cell1.style.fontFamily = "sans-serif";
+      cell1.style.textAlign = "center";
+    cell1.id = loanRe[i].key;
+   cell1.onclick = function () {
+              loll(this);
+          };
+cell1.innerHTML = loanRe[i].nationname + '<br  /> Amount: ' + loanRe[i].amount + '<br  /><br  />';
+    var div = document.getElementById('a');
+       div.appendChild(posttable);
+
+}
+
+});
+}
+
+function loll(d){
+
+    var dd = d.id;
+
+  var nationname;
+  var amount;
+  var type;
+  var key;
+  var k;
+  var pb;
+  var debt;
+  var time;
+  var database = firebase.database();
+        var oi = firebase.database().ref().child('/UnvestRequest/' + dd +'/nationname/');
+        oi.on('value', function(snapshot) {
+          nationname = snapshot.val();
+        });
+
+        var ty = firebase.database().ref().child('/UnvestRequest/' + dd +'/key/');
+        ty.on('value', function(snapshot) {
+          key = snapshot.val();
+        });
+
+        var amot = firebase.database().ref().child('/UnvestRequest/' + dd +'/amount/');
+        amot.on('value', function(snapshot) {
+          amount = snapshot.val();
+        });
+
+        var keyyy = firebase.database().ref().child('/UnvestRequest/' + dd +'/time/');
+        keyyy.on('value', function(snapshot) {
+          time = snapshot.val();
+        });
+
+        retrieve(nationname);
+
+        document.getElementById("infoadapter").innerHTML ='';
+          var element = document.createElement("Button");
+        element.innerHTML = "Accept";
+        element.onclick = function() {
+          var updates = {};
+          var xx = Number(amount) - Number(money);
+          var ee = Number(invested) - Number(amount);
+          updates['invested'] = ee;
+          database.ref('/Nations/' + nationname).update(updates);
+
+          var updates = {};
+
+          updates['invested'] = time;
+          database.ref('/Nations/' + nationname + '/UnvestRequest/' + key).update(updates);
+          var adaRef = firebase.database().ref('/UnvestRequest/' + dd);
+          adaRef.remove()
+            .then(function() {
+              console.log("Remove succeeded.")
+            })
+            .catch(function(error) {
+              console.log("Remove failed: " + error.message)
+            });
+
+        };
+
+        var element1 = document.createElement("Button");
+        element1.innerHTML = "Decline";
+        element1.onclick = function() {
+
+          var adaRef = firebase.database().ref('/UnvestRequest/' + dd);
+          adaRef.remove()
+            .then(function() {
+              console.log("Remove succeeded.")
+            })
+            .catch(function(error) {
+              console.log("Remove failed: " + error.message)
+            });
+        };
+        var foo = document.getElementById("infoadapter");
+        foo.appendChild(element);
+        foo.appendChild(element1);
+}
+
+function retrieve(d){
+var nationname = d;
+var z;
+  var trylq = firebase.database().ref().child('Nations/NineState/coal/');
+  trylq.on('value', function(snapshot) {
+    z = snapshot.val();
+
+
+  var oi = firebase.database().ref().child('Nations/' + nationname +'/oil/');
+  oi.on('value', function(snapshot) {
+    oil = snapshot.val();
+  });
+
+  var acn = firebase.database().ref().child('Nations/' + nationname +'/accountnumber/');
+  acn.on('value', function(snapshot) {
+    accountnumber = snapshot.val();
+  });
+
+  var mpnn = firebase.database().ref().child('Nations/' + nationname +'/mpn/');
+  mpnn.on('value', function(snapshot) {
+    mpn = snapshot.val();
+  });
+
+  var alm = firebase.database().ref().child('Nations/' + nationname +'/alum/');
+  alm.on('value', function(snapshot) {
+    alum = snapshot.val();
+  });
+
+  var bcm = firebase.database().ref().child('Nations/' + nationname +'/bankaccountmoney/');
+  bcm.on('value', function(snapshot) {
+    money = snapshot.val();
+  });
+
+  var bxit = firebase.database().ref().child('Nations/' + nationname +'/bauxite/');
+  bxit.on('value', function(snapshot) {
+    bauxite = snapshot.val();
+  });
+
+  var iii = firebase.database().ref().child('Nations/' + nationname +'/invested/');
+  iii.on('value', function(snapshot) {
+    invested = snapshot.val();
+  });
+
+  var creditSc = firebase.database().ref().child('Nations/' + nationname +'/creditScore/');
+  creditSc.on('value', function(snapshot) {
+    creditScore = snapshot.val();
+  });
+
+  var fd = firebase.database().ref().child('Nations/' + nationname +'/food/');
+  fd.on('value', function(snapshot) {
+    food = snapshot.val();
+  });
+
+  var gs = firebase.database().ref().child('Nations/' + nationname +'/gas/');
+  gs.on('value', function(snapshot) {
+    gas = snapshot.val();
+  });
+
+  var irn = firebase.database().ref().child('Nations/' + nationname +'/iron/');
+  irn.on('value', function(snapshot) {
+    iron = snapshot.val();
+  });
+
+  var ld = firebase.database().ref().child('Nations/' + nationname +'/lead/');
+  ld.on('value', function(snapshot) {
+    lead = snapshot.val();
+  });
+
+  var munitio = firebase.database().ref().child('Nations/' + nationname +'/munitions/');
+  munitio.on('value', function(snapshot) {
+    munition = snapshot.val();
+  });
+
+
+  var steels = firebase.database().ref().child('Nations/' + nationname +'/steel/');
+  steels.on('value', function(snapshot) {
+    steel = snapshot.val();
+  });
+
+  var uraniums = firebase.database().ref().child('Nations/' + nationname +'/uranium/');
+  uraniums.on('value', function(snapshot) {
+    uranium = snapshot.val();
+  });
+
+  var cl = firebase.database().ref().child('Nations/' + nationname +'/coal/');
+  cl.on('value', function(snapshot) {
+    coal = snapshot.val();
+  });
+
+  var cdo = firebase.database().ref().child('Nations/' + nationname +'/debt/');
+  cdo.on('value', function(snapshot) {
+    debt = snapshot.val();
+  });
+
+  var idd = firebase.database().ref().child('Nations/' + nationname +'/id/');
+  idd.on('value', function(snapshot) {
+    id = snapshot.val();
+    document.getElementById("info").innerHTML = "Credit Score: " + creditScore
+    + " Account Number: " + accountnumber +
+    " Food: " + food + " oil: " + oil + " Coal: " + coal
+    + " Uranium: " + uranium + " Lead: " + lead + " Iron: " + iron +
+    " Bauxite: " + bauxite + " gas: " + gas + " Munitions: " + munition + " Steel: " + steel +
+    " Aluminum: " + alum + " $" + money + " Debt: " + debt + ' Invested: ' + invested;;
+  });
+
+});
+
+
+
+
+}
+      </script>
+</head>
+<body style="background-color: #9F33FF" onload="depo();">
+<div id="container">
+<div id="leftpanel">
+  <div id="menu">
+    <span onclick="depo();">Deposits</span>   |  <span onclick="wit();">Withdraw</span>
+     |  <span onclick="inv();">Invest</span>   |  <span onclick="loan();">Loan</span> |
+     <span onclick="unv();">Unvest</span>
+     <div id="a">
+
+     </div>
+   </div>
+</div>
+<div id="mainpanel">
+<div id="info">
+
+</div>
+
+<div id="infoadapter">
+
+</div>
+</div>
+</div>
+
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDdxRVm0adE4BwL2bevpVNH-sHXPWOoNkI",
+    authDomain: "nw-adhd.firebaseapp.com",
+    databaseURL: "https://nw-adhd.firebaseio.com",
+    projectId: "nw-adhd",
+    storageBucket: "",
+    messagingSenderId: "841607727070"
+  };
+  firebase.initializeApp(config);
+</script>
+</body>
+
+</html>

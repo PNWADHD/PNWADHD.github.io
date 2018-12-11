@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <style type="text/css">
+#container{
+  height:auto;
+  width: auto;
+
+}
+
+#header{
+  height: 150px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 100px;
+  margin-top: 50px;
+}
+
+#info{
+height: 50px;
+width: 100%;
+background-color: blue;
+position: absolute;
+top: 0;
+left: 0;
+color: white;
+
+}
+
+#loandiv{
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  background-color:  #FF5733;
+  margin-left: 30px;
+  display: block;
+  float: left;
+
+}
+
+#investdiv{
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  background-color:  #FF5733;
+  margin-left: 50px;
+  display: block;
+  float: left;
+
+}
+
+#savingsdiv{
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  background-color:  #FF5733;
+  margin-left: 50px;
+  display: block;
+  float: left;
+}
+
+#sheader{
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+#iheader{
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+#lheader{
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+
+}
+
+#Deposit{
+  height: 20px;
+  width: 55px;
+  color: white;
+  background-color: blue;
+  display: block;
+float: left;
+
+  margin-left: 140px;
+}
+
+
+#Withdraw{
+  height: 20px;
+  width: 65px;
+  color: blue;
+  background-color: white;
+  display: block;
+  float: left;
+
+
+}
+
+#savingsadapter{
+  overflow: scroll;
+  height: 305px;
+
+  width: 100%;
+}
+
+
+    </style>
+
+      <script type="text/javascript">
+      var oil;
+      var alum;
+      var creditScore;
+      var money;
+      var bauxite;
+      var food;
+      var gas;
+      var iron;
+      var lead;
+      var munitions;
+      var steel;
+      var uranium;
+      var accountnumber;
+      var nationname;
+      var id;
+      var coal;
+      var currentdebtowed;
+      var userID;
+      var debt;
+      var invested;
+      var mpn;
+
+      var savingtype = 'dep';
+      function load(){
+        var firebaseref = firebase.database().ref();
+        var database = firebase.database();
+
+            firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {
+
+                // User is signed in.
+              userID = firebase.auth().currentUser.uid;
+
+
+              var trylq = firebase.database().ref().child('Users/' + userID +'/name/');
+              trylq.on('value', function(snapshot) {
+                nationname = snapshot.val();
+
+
+              var oi = firebase.database().ref().child('Nations/' + nationname +'/oil/');
+              oi.on('value', function(snapshot) {
+                oil = snapshot.val();
+              });
+
+              var acn = firebase.database().ref().child('Nations/' + nationname +'/accountnumber/');
+              acn.on('value', function(snapshot) {
+                accountnumber = snapshot.val();
+              });
+
+              var mpnn = firebase.database().ref().child('Nations/' + nationname +'/mpn/');
+              mpnn.on('value', function(snapshot) {
+                mpn = snapshot.val();
+              });
+
+              var alm = firebase.database().ref().child('Nations/' + nationname +'/alum/');
+              alm.on('value', function(snapshot) {
+                alum = snapshot.val();
+              });
+
+              var bcm = firebase.database().ref().child('Nations/' + nationname +'/bankaccountmoney/');
+              bcm.on('value', function(snapshot) {
+                money = snapshot.val();
+              });
+
+              var bxit = firebase.database().ref().child('Nations/' + nationname +'/bauxite/');
+              bxit.on('value', function(snapshot) {
+                bauxite = snapshot.val();
+              });
+
+              var iii = firebase.database().ref().child('Nations/' + nationname +'/invested/');
+              iii.on('value', function(snapshot) {
+                invested = snapshot.val();
+              });
+
+              var creditSc = firebase.database().ref().child('Nations/' + nationname +'/creditScore/');
+              creditSc.on('value', function(snapshot) {
+                creditScore = snapshot.val();
+              });
+
+              var fd = firebase.database().ref().child('Nations/' + nationname +'/food/');
+              fd.on('value', function(snapshot) {
+                food = snapshot.val();
+              });
+
+              var gs = firebase.database().ref().child('Nations/' + nationname +'/gas/');
+              gs.on('value', function(snapshot) {
+                gas = snapshot.val();
+              });
+
+              var irn = firebase.database().ref().child('Nations/' + nationname +'/iron/');
+              irn.on('value', function(snapshot) {
+                iron = snapshot.val();
+              });
+
+              var ld = firebase.database().ref().child('Nations/' + nationname +'/lead/');
+              ld.on('value', function(snapshot) {
+                lead = snapshot.val();
+              });
+
+              var munitio = firebase.database().ref().child('Nations/' + nationname +'/munitions/');
+              munitio.on('value', function(snapshot) {
+                munition = snapshot.val();
+              });
+
+
+              var steels = firebase.database().ref().child('Nations/' + nationname +'/steel/');
+              steels.on('value', function(snapshot) {
+                steel = snapshot.val();
+              });
+
+              var uraniums = firebase.database().ref().child('Nations/' + nationname +'/uranium/');
+              uraniums.on('value', function(snapshot) {
+                uranium = snapshot.val();
+              });
+
+              var cl = firebase.database().ref().child('Nations/' + nationname +'/coal/');
+              cl.on('value', function(snapshot) {
+                coal = snapshot.val();
+              });
+
+              var cdo = firebase.database().ref().child('Nations/' + nationname +'/debt/');
+              cdo.on('value', function(snapshot) {
+                debt = snapshot.val();
+              });
+
+              var idd = firebase.database().ref().child('Nations/' + nationname +'/id/');
+              idd.on('value', function(snapshot) {
+                id = snapshot.val();
+                loanR();
+                aa();
+                savingsR();
+                document.getElementById("info").innerHTML = "Credit Score: " + creditScore
+                + " Account Number: " + accountnumber +
+                " Food: " + food + " oil: " + oil + " Coal: " + coal
+                + " Uranium: " + uranium + " Lead: " + lead + " Iron: " + iron +
+                " Bauxite: " + bauxite + " gas: " + gas + " Munitions: " + munition + " Steel: " + steel +
+                " Aluminum: " + alum + " $" + money + " Debt: $" + debt + ' Invested: ' + invested;;
+              });
+
+});
+
+            }
+          else{
+      window.location.href = "signin.htm";  
+          }});
+      }
+      function aa(){
+        var t;
+        var database = firebase.database();
+        var c = firebase.database().ref().child('Nations/' + nationname +'/investtime/');
+        c.on('value', function(snapshot) {
+          ti = snapshot.val();
+        });
+      var tt = firebase.database.ServerValue.TIMESTAMP;
+      var di = Number(tt) - Number(t);
+      var dd = Number(di) / Number(604800000);
+      var offf = Math.floor(dd);
+      for(var i = 0; i < offf; i++)
+      {
+        var ll = Number(invested) * Number(.021);
+        invested = Number(invested) + Number(ll);
+      }
+
+
+      var updates = {};
+      updates['invested'] = invested;
+      updates['investtime'] = tt;
+      database.ref('/Nations/' + nationname).update(updates);
+      document.getElementById('ivestadapter').innerHTML =
+      "<br  /> Current money invested: " + invested;
+      }
+
+
+      function savingsR(){
+
+        var database = firebase.database();
+        var loanRe = [];
+              database.ref('/Nations/' + nationname + '/SavingsRequest').on('value', function(snap) {
+                snap.forEach(function(item) {
+                  document.getElementById("savingsadapter").innerHTML = "";
+                  loanRe.unshift(item.val());
+                }
+              )
+    for(var i = 0; i < loanRe.length; i++)
+    {
+      document.getElementById("savingsadapter").innerHTML += "Amount: " +
+      loanRe[i].amount + "<br  /> Status: " + loanRe[i].status + "<br  />Type: " +
+      loanRe[i].type + '<br  /> ' + loanRe[i].stype + '<br  /><br  />';
+
+
+
+    }
+              });
+      }
+      function loanR(){
+        var database = firebase.database();
+        var loanRe = [];
+              database.ref('/Nations/' + nationname + '/LoanRequest').on('value', function(snap) {
+                snap.forEach(function(item) {
+                  document.getElementById("myloanrequest").innerHTML = "";
+                  loanRe.unshift(item.val());
+                }
+              )
+    for(var i = 0; i < loanRe.length; i++)
+    {
+      document.getElementById("myloanrequest").innerHTML += "Amount: " +
+      loanRe[i].asking + "<br  /> Status: " + loanRe[i].status + "<br  />";
+
+
+
+    }
+              });
+      }
+
+      function calc(){
+        var x = document.getElementById("loanamount").value;
+        if(isNaN(x) == false)
+        {
+          //var z = x + (x * .05);
+          var i = (x  / 5);
+          //var z = Math.abs(x + i).toFixed(2);
+          var z = Number(x) + Number(i);
+
+          document.getElementById("loanpaybackamount").innerHTML = "PayBack Amount: $" + z;
+        }
+        else{
+            document.getElementById("loanpaybackamount").innerHTML = "Inset a Number Please ";
+        }
+
+      }
+
+function loanrequest(){
+  var firebaseref = firebase.database().ref();
+  var database = firebase.database();
+  var x = document.getElementById("loanamount").value;
+  //var z = x + (x * .05);
+  var i = (x  / 5);
+  //var z = Math.abs(x + i).toFixed(2);
+  var z = Number(x) + Number(i);
+
+  if(isNaN(x)== false)
+  {
+
+    var loankey = firebase.database().ref().child('LoanRequest/').push().key;
+    var myloankey = firebase.database().ref().child('Nations/' + nationname + '/LoanRequest').push().key;
+
+        var data =
+        {
+          accountnumber: accountnumber,
+          nationname: nationname,
+          nationid: id,
+          asking: x,
+          payback: z,
+          userid: userID,
+          debt: debt,
+          status: 'pending',
+          k: loankey,
+
+
+        }
+
+        var data1 =
+        {
+          accountnumber: accountnumber,
+          nationname: nationname,
+          nationid: id,
+          asking: x,
+          payback: z,
+          userid: userID,
+          debt: debt,
+          status: 'pending',
+          key: myloankey,
+          k: loankey,
+
+        }
+
+var updates = {};
+
+
+var update = {};
+
+updates['/LoanRequest/' + loankey] = data1;
+update['Nations/' + nationname + '/LoanRequest/' + myloankey] = data;
+
+
+  firebase.database().ref().update(updates);
+    firebase.database().ref().update(update);
+  alert("You will hear back soon about the status of your loan!");
+  }
+  else{
+      alert("Inset a Number");
+  }
+}
+
+function dep(){
+  savingtype = 'dep';
+  document.getElementById("Deposit").style.backgroundColor = "blue";
+  document.getElementById("Deposit").style.color = "white";
+
+  document.getElementById("Withdraw").style.backgroundColor = "white";
+  document.getElementById("Withdraw").style.color = "blue";
+}
+
+function wit(){
+  savingtype = 'with';
+  document.getElementById("Withdraw").style.backgroundColor = "blue";
+  document.getElementById("Withdraw").style.color = "white";
+
+  document.getElementById("Deposit").style.backgroundColor = "white";
+  document.getElementById("Deposit").style.color = "blue";
+
+}
+
+function savin(){
+  var e = document.getElementById("typesendd");
+  var strUser = e.options[e.selectedIndex].value;
+  var trr = type(strUser);
+var x = document.getElementById("wda").value;
+if(savingtype == 'with')
+{
+  if(trr == "Money")
+  {
+    if(Number(money) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+  }
+  else if(trr == 'Oil')
+  {
+    if(Number(oil) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Coal')
+  {
+    if(Number(coal) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Uranium')
+  {
+    if(Number(uranium) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Lead')
+  {
+    if(Number(lead) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+  }else if(trr == 'Iron')
+  {
+    if(Number(iron) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Bauxite')
+  {
+    if(Number(bauxite) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Gas')
+  {  if(Number(gas) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+  }else if(trr == 'Munitions')
+  {
+    if(Number(munitions) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Steel')
+  {
+    if(Number(steel) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+
+  }else if(trr == 'Aluminum')
+  {
+    if(Number(alum) - Number(x) >= 0)
+    {
+      var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+      var updates = {};
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+      var update = {};
+      var data =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        type: trr,
+        stype: 'Deposit',
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        k: loankey,
+      }
+
+      var data1 =
+      {
+        type: trr,
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: myloankey,
+        k: loankey,
+      }
+      updates['/WithdrawRequest/' + loankey] = data1;
+      update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+        firebase.database().ref().update(updates);
+          firebase.database().ref().update(update);
+    }
+    else{
+  alert("Not enough Resources");
+
+    }
+  }
+
+
+
+
+
+}
+else if (savingtype == 'dep')
+{
+  var e = document.getElementById("typesendd");
+  var strUser = e.options[e.selectedIndex].value;
+  var trr = type(strUser);
+  var loankey = firebase.database().ref().child('WithdrawRequest/').push().key;
+  var updates = {};
+  var myloankey = firebase.database().ref().child('Nations/' + nationname + '/SavingsRequest').push().key;
+  var update = {};
+  var data =
+  {
+    accountnumber: accountnumber,
+    nationname: nationname,
+    nationid: id,
+    type: trr,
+    stype: 'Deposit',
+    amount: x,
+    userid: userID,
+    status: 'pending',
+    k: loankey,
+  }
+
+  var data1 =
+  {
+    type: trr,
+    accountnumber: accountnumber,
+    nationname: nationname,
+    nationid: id,
+    amount: x,
+    userid: userID,
+    status: 'pending',
+    key: myloankey,
+    k: loankey,
+  }
+
+  updates['/DepositRequest/' + loankey] = data1;
+  update['Nations/' + nationname + '/SavingsRequest/' + myloankey] = data;
+
+
+    firebase.database().ref().update(updates);
+      firebase.database().ref().update(update);
+
+
+
+}
+
+
+}
+
+function type(d){
+var i = d;
+var x;
+switch(i){
+case '1':
+    x = 'Money';
+    break;
+
+    case '2':
+        x = 'Oil';
+        break;
+
+        case '3':
+            x = 'Coal';
+            break;
+
+            case '4':
+                x = 'Uranium';
+                break;
+
+                case '5':
+                    x = 'Lead';
+                    break;
+
+                    case '6':
+                        x = 'Iron';
+                        break;
+
+                        case '7':
+                            x = 'Bauxite';
+                            break;
+
+                            case '8':
+                                x = 'Gas';
+                                break;
+
+                                case '9':
+                                    x = 'Munitions';
+                                    break;
+
+                                    case '10':
+                                        x = 'Steel';
+                                        break;
+
+                                        case '11':
+                                            x = 'Aluminum';
+                                            break;
+}
+
+return x;
+}
+
+function inbut(){
+  var d = new Date();
+  var n = d.getTime();
+var x = document.getElementById("ivest").value;
+if(Number(x) + invested < 100000000)
+{
+  var myloankey = firebase.database().ref().child('Nations/' + nationname + '/InvestRequest/').push().key;
+  var loankey = firebase.database().ref().child('/InvestRequest/').push().key;
+  var updates = {};
+  var update = {};
+  var data1 =
+  {
+    accountnumber: accountnumber,
+    nationname: nationname,
+    nationid: id,
+    amount: x,
+    userid: userID,
+    status: 'pending',
+    key: loankey,
+    time: n,
+  }
+  update['Nations/' + nationname + '/InvestRequest/' + loankey] = data1;
+    updates['/InvestRequest/' + loankey] = data1;
+  firebase.database().ref().update(update);
+    firebase.database().ref().update(updates);
+}
+else{
+  alert("Max total invested is 100,000,000")
+}
+
+}
+
+function unbut(){
+  var x = document.getElementById("takeout").value;
+  if(isNaN(x)==false){
+    if(invested - Number(x) >= 0)
+    {
+      var myloankey = firebase.database().ref().child('Nations/' + nationname + '/UnvestRequest/').push().key;
+      var loankey = firebase.database().ref().child('/UnvestRequest/').push().key;
+      var updates = {};
+      var update = {};
+        var tt = firebase.database.ServerValue.TIMESTAMP;
+      var data1 =
+      {
+        accountnumber: accountnumber,
+        nationname: nationname,
+        nationid: id,
+        amount: x,
+        userid: userID,
+        status: 'pending',
+        key: loankey,
+        k: myloankey,
+        time: tt,
+      }
+      update['Nations/' + nationname + '/UnvestRequest/' + loankey] = data1;
+        updates['/UnvestRequest/' + loankey] = data1;
+      firebase.database().ref().update(update);
+        firebase.database().ref().update(updates);
+    }
+    else{
+      alert("Not a number")
+    }
+
+  }
+
+
+}
+      </script>
+</head>
+<body style="background-color: #9F33FF" onload="load();">
+<div id="container">
+  <div id="info">
+
+
+  </div>
+  <div id="header">
+    AD Bank
+  </div>
+
+  <div id="loandiv">
+    <div id="lheader">
+      Loan
+    </div>
+      <input onkeyup="calc()" id="loanamount" placeholder="Loan Request Amount"> <br  />
+      <span id="loanpaybackamount"></span><br  />
+      <button onclick="loanrequest();">Request</button>
+      <div id="myloanrequest">
+
+      </div>
+
+  </div>
+
+  <div id="investdiv">
+    <div id="iheader">
+      Invest
+    </div>
+        <input id="ivest" placeholder="Invest amount"><input id="takeout" placeholder="Uninvest request"> <br  />
+        <button onclick="inbut();">Invest Request</button><button onclick="unbut();">Uninvest Request</button>
+        <div id="ivestadapter">
+
+        </div>
+  </div>
+
+  <div id="savingsdiv">
+    <div id="sheader">
+      Savings
+    </div>
+    <center>
+
+
+    <div onclick="dep();" id="Deposit">
+      Deposit
+    </div>
+    <div onclick="wit();" id="Withdraw">
+      Withdraw
+    </div>
+    </center>
+<br  />
+<br  />
+<select id="typesendd">
+  <option value="1">Money</option>
+  <option value="2">Oil</option>
+  <option value="3">Coal</option>
+  <option value="4">Uranium</option>
+
+  <option value="5">Lead</option>
+  <option value="6">Iron</option>
+  <option value="7">Bauxite</option>
+  <option value="8">Gas</option>
+
+  <option value="9">Munitions</option>
+  <option value="10">Steel</option>
+  <option value="11">Aluminum</option>
+
+
+</select>
+<br />
+    <input id="wda" placeholder="W/D Ammount"> <br  />
+    <button onclick="savin();">Submit</button>
+    <div id="savingsadapter">
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDdxRVm0adE4BwL2bevpVNH-sHXPWOoNkI",
+    authDomain: "nw-adhd.firebaseapp.com",
+    databaseURL: "https://nw-adhd.firebaseio.com",
+    projectId: "nw-adhd",
+    storageBucket: "",
+    messagingSenderId: "841607727070"
+  };
+  firebase.initializeApp(config);
+</script>
+</body>
+
+</html>

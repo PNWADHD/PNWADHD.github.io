@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <style type="text/css">
+#container{
+  height:auto;
+  width: auto;
+
+}
+
+#header{
+  height: 150px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 100px;
+
+}
+
+#login{
+height: 450px;
+width: 400px;
+border-radius: 5px;
+background-color:  #FF5733;
+margin-left: 80px;
+display: block;
+float: left;
+}
+
+#register{
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  background-color:  #FF5733;
+  margin-right: 80px;
+  display: block;
+  float: right;
+}
+
+    </style>
+
+      <script type="text/javascript">
+function lg(){
+  var firebaseref = firebase.database().ref();
+  var database = firebase.database();
+var x = document.getElementById("loginemail").value;
+var y = document.getElementById("Password").value;
+
+firebase.auth().signInWithEmailAndPassword(x, y).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+    window.location.href = "index.htm";
+    }
+  });
+
+
+
+}
+function ran(){
+  var text = "";
+  var possible = "0123456789";
+  for (var i = 0; i < 10; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+
+function rg(){
+  var firebaseref = firebase.database().ref();
+  var database = firebase.database();
+  var x = document.getElementById("rloginemail").value;
+  var y = document.getElementById("rPassword").value;
+  var z = document.getElementById("nation").value;
+  var s = document.getElementById("nid").value;
+  var t = ran();
+
+
+  firebase.auth().createUserWithEmailAndPassword(x, y).catch(function(error) {  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  });
+       
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      var a = firebase.auth().currentUser.uid;
+      usersRef = firebaseref.child(user.uid);
+      firebase.database().ref('Nations/' + z).set({
+        id: s,
+        email: x,
+        creditScore: 1,
+        oil: 0,
+        uranium: 0,
+        iron: 0,
+        lead: 0,
+        bauxite: 0,
+        gas: 0,
+        coal: 0,
+        munitions: 0,
+        steel: 0,
+        alum: 0,
+        food: 0,
+        bankaccountmoney: 0,
+        accountnumber: t,
+        debt: 0,
+        mpn: 0,
+
+      });
+
+      firebase.database().ref('Users/' + a).set({
+        name: z,
+      });
+
+
+  setTimeout(function () {
+  changepage();
+  }, 2000);
+
+    }
+    });
+}
+
+function changepage(){
+    window.location.href = "index.htm";
+
+}
+      </script>
+</head>
+<body style="background-color: #9F33FF">
+<div id="container">
+  <div id="header">
+    AD Bank
+  </div>
+
+
+
+<div id="login">
+  <input id="loginemail" placeholder="Email"> <br  />
+  <input id="Password" placeholder="Password"><br  />
+  <button onclick="lg();" id="loginButton">Login</button>
+
+</div>
+<div id="register">
+
+    <input id="nation" placeholder="Nation Name"><br  />
+    <input id="nid" placeholder="Nation ID"><br  />
+  <input id="rloginemail" placeholder="Email"> <br  />
+  <input id="rPassword" placeholder="Password"><br  />
+
+
+
+  <button onclick="rg();" id="RegisterButton">Register</button>
+
+</div>
+
+
+
+
+</div>
+
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDdxRVm0adE4BwL2bevpVNH-sHXPWOoNkI",
+    authDomain: "nw-adhd.firebaseapp.com",
+    databaseURL: "https://nw-adhd.firebaseio.com",
+    projectId: "nw-adhd",
+    storageBucket: "",
+    messagingSenderId: "841607727070"
+  };
+  firebase.initializeApp(config);
+</script>
+</body>
+
+</html>
